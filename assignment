@@ -1,0 +1,71 @@
+---
+title: "Untitled"
+output: html_document
+date: "2022-10-09"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+read the activity
+```{r}
+setwd("C:\\Users\\50568\\Desktop")
+data<-read.csv("activity.csv")
+```
+histogram
+```{r histogram}
+library(ggplot2)
+a<-tapply(data$steps,data$date,sum,na.rm=TRUE)
+qplot(a)
+```
+mean and median
+```{r}
+mean1=mean(a)
+median1=median(a)
+```
+time series plot
+```{r}
+library(ggplot2)
+b<-aggregate(list(a),by=list(interval=data$interval),FUN=mean,na.rm=TRUE)
+ggplot(b,aes(x=interval,y=mean)+
+       g+geom_line)
+```
+maximum number of steps
+```{r}
+which(max(b$steps))
+```
+missing value
+```{r}
+fill.function(steps,interval){
+  fill<NA
+  if (!is.na=TRUE)
+    fill<-fill
+  else
+    fill<-(average[averages$interval=interval,"steps"])
+  return (fill)
+}
+p<-data
+p<-mapply(fill.function,data$steps,data$interval)
+```
+histogram without na
+```{r}
+library(ggplot2)
+x<-tapply(p$steps,p$date,sum)
+qplot(x)
+```
+panel plot
+```{r}
+days<-function(date){
+  day<-weekdays(date)
+  if (day %in% c("Monday","Tuesday","Wednesday","Thursday","Friday"))
+    return(weekday)
+  else
+    return(weekends)
+}
+p$date<-as.Date(filled.data$date)
+p$day<-sapply(filled.data$date,FUN=days)
+average<-aggregate(steps~interval+day,data=p,mean)
+ggplot(averages,aes(interval,steps))+
+  geom_line()
+```
